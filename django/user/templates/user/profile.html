@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %} {{ object.username }} - {{ block.super }} {% endblock %}
+
+{% block body %}
+
+<div class="row">
+  <div class="col-sm-4">
+
+    <div class="avatar">
+      <img src="{{ object.avatar_url }}">
+    </div>
+
+    <div class="about">
+      <h2>{{ object.username }}</h2>
+      {% if object.location %}
+      <p>Location: {{ object.location }}</p>
+      {% endif %}
+      <p>Gender: {{ object.get_gender_display }}</p>
+      {% if object.bio %}
+      <p>Bio: {{ object.bio }}</p>
+      {% endif %}
+    </div>
+
+  </div>
+  <div class="col-sm-8">
+
+    <div class="ask_form pb-4">
+      {% if request.user.is_authenticated %}
+      {% include 'core/common/question_form.html' with asked_to=object.id %}
+      {% else %}
+      Want to ask a question? <a href="{% url 'user:login' %}">Login</a> now.
+      {% endif %}
+    </div>
+
+    {% for question in questions %}
+    <div class="col-sm-12 question pt-4">
+      {% include 'core/common/display_question.html' %}
+    </div>
+    {% empty %}
+    <h2>This user does not have any answers</h2>
+    {% endfor %}
+
+  </div>
+</div>
+{% endblock %}
