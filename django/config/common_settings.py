@@ -31,6 +31,8 @@ ALLOWED_HOSTS = ['0.0.0.0', '192.168.1.2', 'localhost']
 # Application definition
 
 INSTALLED_APPS = [
+    'user',
+
     'crispy_forms',
 
     'django.contrib.admin',
@@ -132,3 +134,7 @@ STATICFILES_DIRS = [
 # Crispy
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
+# Auth
+AUTH_USER_MODEL = 'user.User'
