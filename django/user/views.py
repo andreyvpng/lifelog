@@ -1,3 +1,12 @@
-from django.shortcuts import render
+from django.views.generic import CreateView
+from django.urls import reverse
 
-# Create your views here.
+from .forms import RegisterForm
+
+
+class RegisterView(CreateView):
+    template_name = 'user/register.html'
+    form_class = RegisterForm
+
+    def get_success_url(self):
+        return reverse('user:login')
