@@ -1,8 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
+from django.http.response import HttpResponseBadRequest
 from django.views.generic import CreateView, ListView
 
 from core.models import Action, Record
+from core.forms import RecordCreate
 
 
 class RecordListView(LoginRequiredMixin, ListView):
@@ -34,6 +36,29 @@ class ActionCreateView(LoginRequiredMixin, CreateView):
         self.object.save()
 
         return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('core:action-list')
+
+
+class RecordCreateView(LoginRequiredMixin, CreateView):
+    model = Record
+    form_class = RecordCreate
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+
+        if self.object.action.user != self.request.user:
+            return HttpResponseBadRequest()
+
+        self.object.save()
+
+        return super().form_valid(form)
+
+    def get_form_kwargs(self):
+        kwargs = super(RecordCreateView, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
     def get_success_url(self):
         return reverse('core:record-list')
