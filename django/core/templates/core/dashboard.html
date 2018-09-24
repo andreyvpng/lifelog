@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %} Actions - {{ block.super }}{% endblock %}
+
+{% block body %}
+{% if object_list %}
+<h2>Dashboard</h2>
+<div class="row">
+  {% for action in object_list %}
+  <div class="card text-white bg-primary mb-3 ml-3" style="min-width: 15rem; max-width: 20rem;">
+    <div class="card-header">Action</div>
+    <div class="card-body">
+      <h4 class="card-title">{{ action.text }}</h4>
+      <p class="card-text">
+      {{ action.record_sum }}  
+      </p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<h3>You have no actions</h3>
+{% endif %}
+{% endblock %}
