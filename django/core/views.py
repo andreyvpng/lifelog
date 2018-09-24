@@ -7,6 +7,16 @@ from core.models import Action, Record
 from core.forms import RecordCreate
 
 
+class DashBoardView(LoginRequiredMixin, ListView):
+    template_name = 'core/dashboard.html'
+
+    def get_queryset(self):
+        qs = Action.objects.dasboard(
+            user=self.request.user
+        )
+        return qs
+
+
 class RecordListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
