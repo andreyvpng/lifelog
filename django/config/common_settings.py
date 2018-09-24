@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['0.0.0.0', '192.168.1.2', 'localhost']
 # Application definition
 
 INSTALLED_APPS = [
+    'core',
     'user',
 
     'crispy_forms',
