@@ -28,7 +28,7 @@ class Record(TimeStampedModel):
     action = models.ForeignKey(Action,
                                on_delete=models.CASCADE,
                                related_name='records')
-    values = models.PositiveIntegerField()
+    value = models.PositiveIntegerField()
 
     def __str__(self):
         return '{} {}'.format(self.values,
