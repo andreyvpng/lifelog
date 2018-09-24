@@ -31,5 +31,5 @@ class Record(TimeStampedModel):
     value = models.PositiveIntegerField()
 
     def __str__(self):
-        return '{} {}'.format(self.values,
+        return '{} {}'.format(self.value,
                               self.action.unit[:75])
