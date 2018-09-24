@@ -8,6 +8,7 @@ class TimeStampedModel(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
+        ordering = ('-created',)
         abstract = True
 
 
