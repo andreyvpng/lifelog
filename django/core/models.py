@@ -1,15 +1,32 @@
-from django.db import models
+import datetime
+
 from django.contrib.auth import get_user_model
+from django.db import models
+from django.db.models.aggregates import Sum
+from django.utils import timezone
 
 User = get_user_model()
 
 
 class TimeStampedModel(models.Model):
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now_add=True,
+                                   editable=True)
 
     class Meta:
         ordering = ('-created',)
         abstract = True
+
+
+class ActionManager(models.Manager):
+
+    def dasboard(self, user):
+        qs = self.get_queryset()
+        qs = qs.filter(user=user)
+        qs = qs.annotate(
+            record_sum=Sum('records__value'))
+        qs = qs.filter(records__created__gte=(
+            timezone.now() - datetime.timedelta(days=1)))
+        return qs
 
 
 class Action(TimeStampedModel):
@@ -19,6 +36,7 @@ class Action(TimeStampedModel):
     user = models.ForeignKey(User,
                              on_delete=models.CASCADE,
                              related_name='actions')
+    objects = ActionManager()
 
     def __str__(self):
         return '{} ({})'.format(self.text[:75],
