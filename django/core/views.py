@@ -1,10 +1,10 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse
-from django.http.response import HttpResponseBadRequest
-from django.views.generic import CreateView, ListView, UpdateView
-
-from core.models import Action, Record
 from core.forms import RecordCreate
+from core.models import Action, Record
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
+from django.http.response import HttpResponseBadRequest
+from django.urls import reverse
+from django.views.generic import CreateView, ListView, UpdateView
 
 
 class DashBoardView(LoginRequiredMixin, ListView):
@@ -74,3 +74,19 @@ class ActionCreateView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse('core:action-list')
+
+
+class ActionUpdateView(LoginRequiredMixin, UpdateView):
+    model = Action
+    fields = ('text', 'color', 'unit')
+
+    def dispatch(self, *args, **kwargs):
+        user = self.get_object().user
+
+        if user != self.request.user:
+            raise PermissionDenied
+
+        return super().dispatch(*args, **kwargs)
+
+    def get_success_url(self):
+        return reverse('core:dashboard')
