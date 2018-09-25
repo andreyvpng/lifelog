@@ -19,7 +19,7 @@ class TimeStampedModel(models.Model):
 
 class ActionManager(models.Manager):
 
-    def dasboard(self, user):
+    def dashboard(self, user):
         qs = self.get_queryset()
         qs = qs.filter(user=user)
         qs = qs.filter(records__created__gte=(

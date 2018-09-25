@@ -11,7 +11,7 @@ class DashBoardView(LoginRequiredMixin, ListView):
     template_name = 'core/dashboard.html'
 
     def get_queryset(self):
-        qs = Action.objects.dasboard(
+        qs = Action.objects.dashboard(
             user=self.request.user
         )
         return qs
