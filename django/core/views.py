@@ -18,6 +18,7 @@ class DashBoardView(LoginRequiredMixin, ListView):
 
 
 class RecordListView(LoginRequiredMixin, ListView):
+    paginate_by = 10
 
     def get_queryset(self):
         qs = Record.objects.filter(
@@ -50,6 +51,7 @@ class RecordCreateView(LoginRequiredMixin, CreateView):
 
 
 class ActionListView(LoginRequiredMixin, ListView):
+    paginate_by = 10
 
     def get_queryset(self):
         qs = Action.objects.filter(
