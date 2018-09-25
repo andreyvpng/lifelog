@@ -22,10 +22,10 @@ class ActionManager(models.Manager):
     def dasboard(self, user):
         qs = self.get_queryset()
         qs = qs.filter(user=user)
-        qs = qs.annotate(
-            record_sum=Sum('records__value'))
         qs = qs.filter(records__created__gte=(
             timezone.now() - datetime.timedelta(days=1)))
+        qs = qs.annotate(
+            record_sum=Sum('records__value'))
         return qs
 
 
