@@ -13,7 +13,11 @@
       <p class="card-text">
       {{ action.record_sum }}  {{ action.unit }}
       </p>
-      <p><a href="{% url "core:action-update" pk=action.id %}">Update</a></p>
+      <div class="row">
+        <a href="{% url "core:action-update" pk=action.id %}">
+          <span class="octicon octicon-gear"></span>
+        </a>
+      </div>
     </div>
   </div>
   {% endfor %}

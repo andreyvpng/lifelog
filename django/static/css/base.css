@@ -1,3 +1,10 @@
+a > .octicon {
+  color: #fff;
+}
+.card-body > .row {
+  margin-right: 0px;
+  margin-left:0px;
+}
 /*
  * I took the colors on this site:
  * https://flatuicolors.com/palette/cn
