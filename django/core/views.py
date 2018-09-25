@@ -37,7 +37,7 @@ class ActionListView(LoginRequiredMixin, ListView):
 
 class ActionCreateView(LoginRequiredMixin, CreateView):
     model = Action
-    fields = ('text', 'unit')
+    fields = ('text', 'color', 'unit')
 
     def form_valid(self, form):
         self.object = form.save(commit=False)

@@ -36,6 +36,21 @@ class Action(TimeStampedModel):
     user = models.ForeignKey(User,
                              on_delete=models.CASCADE,
                              related_name='actions')
+    COLORS = (
+        ('or', 'orange'),
+        ('bt', 'bruschetta-tomato'),
+        ('wm', 'watermelon'),
+        ('bw', 'bay-wharf'),
+        ('gr', 'green'),
+        ('cc', 'clear-chill'),
+        ('bg', 'bright-greek'),
+    )
+    color = models.CharField(
+        max_length=2,
+        choices=COLORS,
+        default='or',
+    )
+
     objects = ActionManager()
 
     def __str__(self):
