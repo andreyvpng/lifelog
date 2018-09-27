@@ -1,1 +1,1 @@
-web: gunicorn config.wsgi --chdir django/
+web: gunicorn config.wsgi --chdir django/ --logfile=-
