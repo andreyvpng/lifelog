@@ -1,11 +1,15 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
 {% block title %} Dashboard - {{ block.super }}{% endblock %}
-
 {% block body %}
-{% if object_list %}
 <h2>Dashboard</h2>
-<div class="row">
+<form action="{% url 'core:dashboard' %}" method="GET">
+  {{ form | crispy }}
+  <button type="submit" class="btn btn-primary" >Sumbit</button >
+</form>
+{% if object_list %}
+<div class="row mt-4">
   {% for action in object_list %}
   <div class="card text-white card-{{ action.get_color_display }} col-sm-4 col-md-3 col-lg-2 mb-4 mr-2 ml-2">
     <div class="card-body">
@@ -23,6 +27,6 @@
   {% endfor %}
 </div>
 {% else %}
-<h3>Your dashboard is empty</h3>
+<h3 class="mt-4">Your dashboard is empty</h3>
 {% endif %}
 {% endblock %}
