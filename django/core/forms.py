@@ -17,4 +17,8 @@ class RecordCreate(forms.ModelForm):
 
 
 class ChooseDate(forms.Form):
-    date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    date = forms.DateField(widget=forms.DateInput(attrs={
+        'type': 'date',
+        'id': 'datepicker',
+        'onchange': 'this.form.submit()'
+    }), label='')
