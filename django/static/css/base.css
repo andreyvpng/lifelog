@@ -10,9 +10,9 @@ a > .octicon {
  * https://flatuicolors.com/palette/cn
  */
 .card-orange {background-color: #ffa502 !important; border-color: #ffa502 !important;}
-.card-bruschetta-tomato {background-color: #ff6348 !important; border-color: #ff6348 !important;}
-.card-watermelon {background-color: #ff4757 !important; border-color: #ff4757 !important;}
-.card-bay-wharf {background-color: #747d8c !important; border-color: #747d8c !important;}
+.card-red-orange {background-color: #ff6348 !important; border-color: #ff6348 !important;}
+.card-radical-red {background-color: #ff4757 !important; border-color: #ff4757 !important;}
+.card-gray {background-color: #747d8c !important; border-color: #747d8c !important;}
 .card-green {background-color: #2ed573 !important; border-color: #2ed573 !important;}
-.card-clear-chill {background-color: #1e90ff !important; border-color: #1e90ff !important;}
-.card-bright-greek {background-color: #3742fa !important; border-color: #3742fa !important;}
+.card-blue {background-color: #1e90ff !important; border-color: #1e90ff !important;}
+.card-purple {background-color: #3742fa !important; border-color: #3742fa !important;}

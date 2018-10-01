@@ -37,18 +37,17 @@ class Action(TimeStampedModel):
                              on_delete=models.CASCADE,
                              related_name='actions')
     COLORS = (
-        ('or', 'orange'),
-        ('bt', 'bruschetta-tomato'),
-        ('wm', 'watermelon'),
-        ('bw', 'bay-wharf'),
-        ('gr', 'green'),
-        ('cc', 'clear-chill'),
-        ('bg', 'bright-greek'),
+        (1, 'orange'),
+        (2, 'red-orange'),
+        (3, 'radical-red'),
+        (4, 'gray'),
+        (5, 'green'),
+        (6, 'blue'),
+        (7, 'purple'),
     )
-    color = models.CharField(
-        max_length=2,
+    color = models.IntegerField(
         choices=COLORS,
-        default='or',
+        default=1,
     )
 
     objects = ActionManager()
