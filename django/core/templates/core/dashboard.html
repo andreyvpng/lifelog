@@ -6,7 +6,6 @@
 <h2>Dashboard</h2>
 <form action="{% url 'core:dashboard' %}" method="GET">
   {{ form | crispy }}
-  <button type="submit" class="btn btn-primary" >Sumbit</button >
 </form>
 {% if object_list %}
 <div class="row mt-4">
