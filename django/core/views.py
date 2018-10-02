@@ -16,13 +16,9 @@ class DashBoardView(LoginRequiredMixin, ListView):
     template_name = 'core/dashboard.html'
 
     def get_queryset(self):
-        params = self.request.GET.dict()
-        tz = get_current_timezone()
+        dt = self.get_date()
 
-        try:
-            dt = tz.localize(
-                datetime.strptime(params.get('date'), '%Y-%m-%d'))
-        except (TypeError, ValueError):
+        if dt is None:
             dt = timezone.now()
 
         qs = Action.objects.dashboard(
@@ -36,6 +32,13 @@ class DashBoardView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
 
+        ctx.update({'form': ChooseDate(initial={
+            'date': self.get_date()
+        })})
+
+        return ctx
+
+    def get_date(self):
         params = self.request.GET.dict()
         tz = get_current_timezone()
 
@@ -45,11 +48,7 @@ class DashBoardView(LoginRequiredMixin, ListView):
         except (TypeError, ValueError):
             dt = None
 
-        ctx.update({'form': ChooseDate(initial={
-            'date': dt
-        })})
-
-        return ctx
+        return dt
 
 
 class RecordListView(LoginRequiredMixin, ListView):
