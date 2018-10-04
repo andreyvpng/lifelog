@@ -1,5 +1,7 @@
 from datetime import datetime
 
+from core.forms import ChooseDate, RecordCreate
+from core.models import Action, Record
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.http.response import HttpResponseBadRequest
@@ -7,9 +9,6 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.timezone import get_current_timezone
 from django.views.generic import CreateView, ListView, UpdateView
-
-from core.forms import ChooseDate, RecordCreate
-from core.models import Action, Record
 
 
 class DashBoardView(LoginRequiredMixin, ListView):
