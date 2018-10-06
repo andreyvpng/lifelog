@@ -1,4 +1,5 @@
-from datetime import datetime
+from calendar import monthrange
+from datetime import date, datetime, timedelta
 
 from core.forms import ChooseDate, RecordCreate
 from core.models import Action, Record
@@ -8,7 +9,8 @@ from django.http.response import HttpResponseBadRequest
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.timezone import get_current_timezone
-from django.views.generic import CreateView, ListView, UpdateView
+from django.views.generic import (CreateView, ListView, RedirectView,
+                                  TemplateView, UpdateView)
 
 
 class DashBoardView(LoginRequiredMixin, ListView):
@@ -123,3 +125,71 @@ class ActionUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('core:dashboard')
+
+
+class ActionCurrentMonthView(LoginRequiredMixin, RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        today = timezone.now()
+        return reverse(
+            'core:action-month',
+            kwargs={
+                'month': today.month,
+                'year': today.year,
+                'pk': self.get_action()
+            }
+        )
+
+    def get_action(self):
+        return self.kwargs['pk']
+
+
+class ActionMonthView(LoginRequiredMixin, TemplateView):
+    template_name = 'core/action_month.html'
+
+    def dispatch(self, *args, **kwargs):
+        user = Action.objects.filter(id=self.get_action()).first().user
+
+        if user != self.request.user:
+            raise PermissionDenied
+
+        return super().dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+
+        chosen_date = date(self.get_year(), self.get_month(), 1)
+        today = date.today()
+
+        previous_month = (
+            chosen_date.replace(day=1) - timedelta(1)).replace(day=1)
+        next_month = (
+            chosen_date.replace(day=28) + timedelta(10)).replace(day=1)
+
+        if today.month <= chosen_date.month:
+            next_month = None
+
+        ctx.update({
+            'list': Action.objects.get_month_statistic(
+                id=self.get_action(),
+                user=self.request.user,
+                month=self.get_month(),
+                year=self.get_year()
+            ),
+            'monthrange': [
+                i for i in range(1, monthrange(2018, 10)[1] + 1)
+            ],
+            'previous_month': previous_month,
+            'next_month': next_month,
+            'chosen_date': chosen_date
+        })
+
+        return ctx
+
+    def get_month(self):
+        return self.kwargs['month']
+
+    def get_year(self):
+        return self.kwargs['year']
+
+    def get_action(self):
+        return self.kwargs['pk']

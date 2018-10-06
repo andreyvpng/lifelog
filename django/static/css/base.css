@@ -5,6 +5,15 @@ a > .octicon {
   margin-right: 0px;
   margin-left:0px;
 }
+.card-body > .row > a {
+  margin-right: 10px;
+}
+@media only screen and (min-width: 990px) {
+    .ct-golden-section {
+      max-width: 60%;
+      margin: 0 auto;
+    }
+}
 /*
  * I took the colors on this site:
  * https://flatuicolors.com/palette/cn

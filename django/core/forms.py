@@ -1,6 +1,5 @@
-from django import forms
-
 from core.models import Action, Record
+from django import forms
 
 
 class RecordCreate(forms.ModelForm):
