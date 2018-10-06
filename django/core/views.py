@@ -158,14 +158,21 @@ class ActionMonthView(LoginRequiredMixin, TemplateView):
         ctx = super().get_context_data(**kwargs)
 
         chosen_date = date(self.get_year(), self.get_month(), 1)
-        today = date.today()
+        today = date.today().replace(day=1)
 
         previous_month = (
             chosen_date.replace(day=1) - timedelta(1)).replace(day=1)
         next_month = (
             chosen_date.replace(day=28) + timedelta(10)).replace(day=1)
 
-        if today.month <= chosen_date.month:
+        date_of_creation_action = Action.objects.filter(
+            pk=self.get_action()
+        ).first().created.date()
+
+        if date_of_creation_action >= chosen_date:
+            previous_month = None
+
+        if today <= chosen_date:
             next_month = None
 
         ctx.update({
