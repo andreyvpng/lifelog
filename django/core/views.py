@@ -102,7 +102,6 @@ class ActionCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.user = self.request.user
-
         self.object.save()
 
         return super().form_valid(form)
@@ -128,6 +127,7 @@ class ActionUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class ActionCurrentMonthView(LoginRequiredMixin, RedirectView):
+
     def get_redirect_url(self, *args, **kwargs):
         today = timezone.now()
         return reverse(
@@ -157,37 +157,24 @@ class ActionMonthView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
 
-        chosen_date = date(self.get_year(), self.get_month(), 1)
-        today = date.today().replace(day=1)
-
-        previous_month = (
-            chosen_date.replace(day=1) - timedelta(1)).replace(day=1)
-        next_month = (
-            chosen_date.replace(day=28) + timedelta(10)).replace(day=1)
-
-        date_of_creation_action = Action.objects.filter(
-            pk=self.get_action()
-        ).first().created.date()
-
-        if date_of_creation_action >= chosen_date:
-            previous_month = None
-
-        if today <= chosen_date:
-            next_month = None
-
+        # Month statistic
         ctx.update({
             'list': Action.objects.get_month_statistic(
                 id=self.get_action(),
                 user=self.request.user,
                 month=self.get_month(),
                 year=self.get_year()
-            ),
+            )
+        })
+
+        # Dates
+        ctx.update({
             'monthrange': [
                 i for i in range(1, monthrange(2018, 10)[1] + 1)
             ],
-            'previous_month': previous_month,
-            'next_month': next_month,
-            'chosen_date': chosen_date
+            'previous_month': self.get_previous_month(),
+            'next_month': self.get_next_month(),
+            'chosen_date': self.get_chosen_date()
         })
 
         return ctx
@@ -200,3 +187,38 @@ class ActionMonthView(LoginRequiredMixin, TemplateView):
 
     def get_action(self):
         return self.kwargs['pk']
+
+    def get_chosen_date(self):
+        chosen_date = date(self.get_year(), self.get_month(), 1)
+        return chosen_date
+
+    def get_today(self):
+        today = date.today().replace(day=1)
+        return today
+
+    def get_previous_month(self):
+        chosen_date = self.get_chosen_date()
+
+        previous_month = (
+            chosen_date.replace(day=1) - timedelta(1)).replace(day=1)
+
+        date_of_creation_action = Action.objects.filter(
+            pk=self.get_action()
+        ).first().created.date()
+
+        if date_of_creation_action >= chosen_date:
+            previous_month = None
+
+        return previous_month
+
+    def get_next_month(self):
+        today = self.get_today()
+        chosen_date = self.get_chosen_date()
+
+        next_month = (
+            chosen_date.replace(day=28) + timedelta(10)).replace(day=1)
+
+        if today <= chosen_date:
+            next_month = None
+
+        return next_month
