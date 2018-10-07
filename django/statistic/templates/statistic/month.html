@@ -10,10 +10,10 @@
 <nav aria-label="Page navigation example">
   <ul class="pagination justify-content-center">
     <li class="page-item {% if not previous_month %}disabled{% endif %}">
-      <a class="page-link" href="{% if previous_month %}{% url "core:action-month" pk=pk year=previous_month.year month=previous_month.month %}{% endif %}">Previous</a>
+      <a class="page-link" href="{% if previous_month %}{% url "statistic:month" pk=pk year=previous_month.year month=previous_month.month %}{% endif %}">Previous</a>
     </li>
     <li class="page-item {% if not next_month %}disabled{% endif %}">
-      <a class="page-link" href="{% if next_month %}{% url "core:action-month" pk=pk year=next_month.year month=next_month.month %}{% endif %}">Next</a>
+      <a class="page-link" href="{% if next_month %}{% url "statistic:month" pk=pk year=next_month.year month=next_month.month %}{% endif %}">Next</a>
     </li>
   </ul>
 </nav>

@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['0.0.0.0', '192.168.1.2', 'localhost']
 INSTALLED_APPS = [
     'core',
     'dashboard',
+    'statistic',
     'user',
 
     'crispy_forms',

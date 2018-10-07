@@ -19,10 +19,4 @@ urlpatterns = [
     path('action-update/<int:pk>',
          views.ActionUpdateView.as_view(),
          name='action-update'),
-    path('action/<int:pk>/statistic',
-         views.ActionCurrentMonthView.as_view(),
-         name='action-current-month'),
-    path('action/<int:pk>/statistic/<int:year>/<int:month>',
-         views.ActionMonthView.as_view(),
-         name='action-month'),
 ]
