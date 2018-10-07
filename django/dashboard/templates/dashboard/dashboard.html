@@ -4,7 +4,7 @@
 {% block title %} Dashboard - {{ block.super }}{% endblock %}
 {% block body %}
 <h2>Dashboard</h2>
-<form action="{% url 'core:dashboard' %}" method="GET">
+<form action="{% url 'dashboard:dashboard' %}" method="GET">
   {{ form | crispy }}
 </form>
 {% if object_list %}

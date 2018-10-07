@@ -13,11 +13,3 @@ class RecordCreate(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['action'].queryset =\
             Action.objects.filter(user=user)
-
-
-class ChooseDate(forms.Form):
-    date = forms.DateField(widget=forms.DateInput(attrs={
-        'type': 'date',
-        'id': 'datepicker',
-        'onchange': 'this.form.submit()'
-    }), label='')

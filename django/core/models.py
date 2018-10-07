@@ -1,5 +1,6 @@
 from calendar import monthrange
 
+from dashboard.models import ActionDashboardManager
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.db.models.aggregates import Sum
@@ -17,18 +18,6 @@ class TimeStampedModel(models.Model):
 
 
 class ActionManager(models.Manager):
-
-    def dashboard(self, user, year, month, day):
-        qs = self.get_queryset()
-        qs = qs.filter(user=user)
-        qs = qs.filter(
-            records__created__day=day,
-            records__created__month=month,
-            records__created__year=year
-        )
-        qs = qs.annotate(
-            record_sum=Sum('records__value'))
-        return qs
 
     def get_month_statistic(self, id, user, month, year):
         qs = self.get_queryset()
@@ -75,6 +64,7 @@ class Action(TimeStampedModel):
     )
 
     objects = ActionManager()
+    dashboard = ActionDashboardManager()
 
     def __str__(self):
         return '{} ({})'.format(self.text[:75],
