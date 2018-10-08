@@ -16,3 +16,10 @@ Add .env. For developping I'm using this:
 For build and run, use:
 
     docker-compose build && docker-compose up
+
+License
+=======
+
+lifelog is free software under terms of the MIT License.
+
+Copyright (C) 2018 by Andrey Varfolomeev
