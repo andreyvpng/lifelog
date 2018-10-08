@@ -37,6 +37,11 @@ class RecordCreateView(LoginRequiredMixin, CreateView):
     model = Record
     form_class = RecordCreate
 
+    def get_initial(self):
+        initial = super(RecordCreateView, self).get_initial()
+        initial['action'] = self.get_action()
+        return initial
+
     def form_valid(self, form):
         self.object = form.save(commit=False)
 
@@ -54,6 +59,15 @@ class RecordCreateView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse('core:record-list')
+
+    def get_action(self):
+        params = self.request.GET.dict()
+        action = params.get('action')
+
+        if not Action.objects.filter(id=action):
+            action = None
+
+        return action
 
 
 class ActionListView(LoginRequiredMixin, ListView):

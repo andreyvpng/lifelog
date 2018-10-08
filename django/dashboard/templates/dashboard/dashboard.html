@@ -23,6 +23,9 @@
         <a href="{% url "statistic:current-month" pk=action.id %}">
           <span class="octicon octicon-graph"></span>
         </a>
+        <a href="{% url "core:record-create" %}?action={{action.id}}">
+          <span class="octicon octicon-plus"></span>
+        </a>
       </div>
     </div>
   </div>
