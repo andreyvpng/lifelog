@@ -58,7 +58,7 @@ class RecordCreateView(LoginRequiredMixin, CreateView):
         return kwargs
 
     def get_success_url(self):
-        return reverse('core:record-list')
+        return reverse('dashboard:dashboard')
 
     def get_action(self):
         params = self.request.GET.dict()
@@ -92,4 +92,4 @@ class ActionCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('core:action-list')
+        return reverse('dashboard:dashboard')
