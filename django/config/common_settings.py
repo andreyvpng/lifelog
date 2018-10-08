@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'core',
     'dashboard',
     'statistic',
+    'goal',
     'user',
 
     'crispy_forms',
