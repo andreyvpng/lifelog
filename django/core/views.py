@@ -3,8 +3,8 @@ from core.models import Action, Record
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.http.response import HttpResponseBadRequest
-from django.urls import reverse
-from django.views.generic import CreateView, ListView, UpdateView
+from django.urls import reverse, reverse_lazy
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 
 class ActionUpdateView(LoginRequiredMixin, UpdateView):
@@ -93,3 +93,16 @@ class ActionCreateView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse('dashboard:dashboard')
+
+
+class ActionDeleteView(LoginRequiredMixin, DeleteView):
+    model = Action
+    success_url = reverse_lazy('dashboard:dashboard')
+
+    def dispatch(self, *args, **kwargs):
+        user = self.get_object().user
+
+        if user != self.request.user:
+            raise PermissionDenied
+
+        return super().dispatch(*args, **kwargs)

@@ -19,4 +19,7 @@ urlpatterns = [
     path('action-update/<int:pk>',
          views.ActionUpdateView.as_view(),
          name='action-update'),
+    path('action-delete/<int:pk>',
+         views.ActionDeleteView.as_view(),
+         name='action-delete')
 ]
