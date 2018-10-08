@@ -1,5 +1,5 @@
-from django.db import models
 from core.models import Action
+from django.db import models
 from utils.models import TimeStampedModel
 
 
