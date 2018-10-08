@@ -4,6 +4,9 @@ Life log app gives you the opportunity to track your activity.
 
 ![Screenshot](screenshot.png)
 
+Build & run
+===========
+
 Add .env. For developping I'm using this:
 
     DJANGO_DB_NAME=lifelog
