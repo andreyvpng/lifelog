@@ -4,8 +4,7 @@ Life log app gives you the opportunity to track your activity.
 
 ![Screenshot](screenshot.png)
 
-Build & run
-===========
+## Build & Run
 
 Add .env. For developping I'm using this:
 
@@ -20,8 +19,7 @@ For build and run, use:
 
     docker-compose build && docker-compose up
 
-License
-=======
+## License
 
 lifelog is free software under terms of the MIT License.
 
