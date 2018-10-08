@@ -21,6 +21,6 @@ For build and run, use:
 
 ## License
 
-lifelog is free software under terms of the MIT License.
+lifelog is free software under terms of the Apache License 2.0
 
 Copyright (C) 2018 by Andrey Varfolomeev
