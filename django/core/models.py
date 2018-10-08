@@ -2,17 +2,9 @@ from dashboard.models import ActionDashboardManager
 from django.contrib.auth import get_user_model
 from django.db import models
 from statistic.models import ActionMonthStatisticManager
+from utils.models import TimeStampedModel
 
 User = get_user_model()
-
-
-class TimeStampedModel(models.Model):
-    created = models.DateTimeField(auto_now_add=True,
-                                   editable=True)
-
-    class Meta:
-        ordering = ('-created',)
-        abstract = True
 
 
 class Action(TimeStampedModel):
