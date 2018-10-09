@@ -26,6 +26,9 @@
         <a href="{% url "core:record-create" %}?action={{action.id}}">
           <span class="octicon octicon-plus"></span>
         </a>
+        <a href="{% url "goal:create" %}?action={{action.id}}">
+          <span class="octicon octicon-rocket"></span>
+        </a>
         <a href="{% url "core:action-delete" pk=action.id %}">
           <span class="octicon octicon-trashcan"></span>
         </a>

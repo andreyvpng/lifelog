@@ -14,10 +14,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 import user.urls
+
 import core.urls
 import dashboard.urls
+import goal.urls
 import statistic.urls
-
 from django.contrib import admin
 from django.urls import include, path
 from django.views.generic import RedirectView
@@ -27,6 +28,7 @@ urlpatterns = [
     path('user/', include(user.urls, namespace='user')),
     path('dashboard/', include(dashboard.urls, namespace='dashboard')),
     path('statistic/', include(statistic.urls, namespace='statistic')),
+    path('goal/', include(goal.urls, namespace='goal')),
     path('', include(core.urls, namespace='core')),
     path('', RedirectView.as_view(url='/dashboard', permanent=True)),
 ]
