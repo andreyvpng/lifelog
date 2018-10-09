@@ -6,7 +6,7 @@ a > .octicon {
   margin-left:0px;
 }
 .card-body > .row > a {
-  margin-right: 10px;
+  margin-right: 4px;
 }
 @media only screen and (min-width: 990px) {
     .ct-golden-section {
