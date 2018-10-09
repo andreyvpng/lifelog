@@ -15,6 +15,12 @@
       <h4 class="card-title">{{ action.text }}</h4>
       <p class="card-text">
       {{ action.record_sum }}  {{ action.unit }}
+      <br>
+      {% if action.is_goal_passed == "P" %}
+        Daily Goal passed
+      {% elif action.is_goal_passed == "F" %}
+        Daily Goal not passed yet
+      {% endif %}
       </p>
       <div class="row">
         <a href="{% url "core:action-update" pk=action.id %}">

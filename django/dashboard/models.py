@@ -21,4 +21,30 @@ class ActionDashboardManager(models.Manager):
                 )
             ),
         )
+
+        NOT_CHOSEN = 'N'
+        GOAL_PASSED = 'P'
+        GOAL_NOT_PASSED = 'F'
+        ANSWER_CHOICES = (
+            (NOT_CHOSEN, ''),
+            (GOAL_PASSED, 'Daily Goal passed'),
+            (GOAL_NOT_PASSED, 'Daily Goal not passed yet'),
+        )
+
+        qs = qs.annotate(
+            is_goal_passed=models.Case(
+                models.When(
+                    record_sum__gte=models.F('goal__daily_value'),
+                    then=models.Value(GOAL_PASSED)
+                ),
+                models.When(
+                    goal=None,
+                    then=models.Value(NOT_CHOSEN)
+                ),
+                default=models.Value(GOAL_NOT_PASSED),
+                output_field=models.CharField(max_length=1,
+                                              choices=ANSWER_CHOICES)
+            )
+        )
+
         return qs
