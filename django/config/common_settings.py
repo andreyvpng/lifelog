@@ -139,7 +139,7 @@ STATICFILES_DIRS = [
 # Login
 
 LOGIN_URL = 'user:login'
-LOGIN_REDIRECT_URL = 'core:dashboard'
+LOGIN_REDIRECT_URL = 'dashboard:dashboard'
 LOGOUT_REDIRECT_URL = 'user:login'
 
 
