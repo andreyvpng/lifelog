@@ -2,9 +2,22 @@ from core.forms import RecordCreate
 from core.models import Action, Record
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
+from django.http import HttpResponseRedirect
 from django.http.response import HttpResponseBadRequest
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, DeleteView, ListView, UpdateView
+from django.views.generic import (CreateView, DeleteView, ListView,
+                                  TemplateView, UpdateView)
+
+
+class WelcomeView(TemplateView):
+    template_name = 'core/welcome.html'
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return HttpResponseRedirect(
+                reverse('dashboard:dashboard'))
+
+        return super().get(request, *args, **kwargs)
 
 
 class ActionUpdateView(LoginRequiredMixin, UpdateView):

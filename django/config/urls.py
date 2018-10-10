@@ -19,10 +19,8 @@ import core.urls
 import dashboard.urls
 import goal.urls
 import statistic.urls
-import welcome.urls
 from django.contrib import admin
 from django.urls import include, path
-from django.views.generic import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,7 +28,5 @@ urlpatterns = [
     path('dashboard/', include(dashboard.urls, namespace='dashboard')),
     path('statistic/', include(statistic.urls, namespace='statistic')),
     path('goal/', include(goal.urls, namespace='goal')),
-    path('welcome/', include(welcome.urls, namespace='welcome')),
     path('', include(core.urls, namespace='core')),
-    path('', RedirectView.as_view(url='/welcome', permanent=True)),
 ]

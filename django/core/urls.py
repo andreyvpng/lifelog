@@ -4,6 +4,9 @@ from . import views
 
 app_name = 'core'
 urlpatterns = [
+    path('',
+         views.WelcomeView.as_view(),
+         name='welcome'),
     path('records',
          views.RecordListView.as_view(),
          name='record-list'),
