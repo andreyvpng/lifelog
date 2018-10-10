@@ -25,3 +25,29 @@ a > .octicon {
 .card-green {background-color: #2ed573 !important; border-color: #2ed573 !important;}
 .card-blue {background-color: #1e90ff !important; border-color: #1e90ff !important;}
 .card-purple {background-color: #3742fa !important; border-color: #3742fa !important;}
+
+.header {
+    min-height: 30rem;
+    position: relative;
+    display: table;
+    width: 100%;
+    height: auto;
+    padding-top: 11rem;
+    padding-bottom: 11rem;
+}
+
+.header h1 {
+    font-size: 4rem;
+    margin: 0;
+    padding: 0;
+}
+
+.content-section {
+    padding-top: 7.5rem;
+    padding-bottom: 7.5rem;
+}
+
+footer.footer {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+}

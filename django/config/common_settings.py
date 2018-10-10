@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'statistic',
     'goal',
     'user',
+    'welcome',
 
     'crispy_forms',
 
