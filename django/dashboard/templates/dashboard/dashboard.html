@@ -7,37 +7,50 @@
 <form action="{% url 'dashboard:dashboard' %}" method="GET">
   {{ form | crispy }}
 </form>
+
 {% if object_list %}
-<div class="row mt-4">
+<div class="mt-4">
   {% for action in object_list %}
-  <div class="card text-white card-{{ action.get_color_display }} col-sm-4 col-md-3 col-lg-2 mb-4 mr-2 ml-2">
+  <div class="card">
+    <div class="progress">
+      <div class="progress-bar action-{{ action.get_color_display }}" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
     <div class="card-body">
-      <h4 class="card-title">{{ action.text }}</h4>
-      <p class="card-text">
-      {{ action.record_sum }}  {{ action.unit }}
-      <br>
-      {% if action.is_goal_passed == "P" %}
-        Daily Goal passed
-      {% elif action.is_goal_passed == "F" %}
-        Daily Goal not passed yet
-      {% endif %}
-      </p>
-      <div class="row">
-        <a href="{% url "core:action-update" pk=action.id %}">
-          <span class="octicon octicon-gear"></span>
+      <div class="dropdown card-options">
+      <span class="btn-options" type="button" id="project-dropdown-button-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="octicon octicon-three-bars"></span>
+      </span>
+      <div class="dropdown-menu dropdown-menu-right">
+        <a class="dropdown-item" href="{% url "goal:create" %}?action={{action.id}}">
+          <span class="octicon octicon-rocket"></span> Create Goal
         </a>
-        <a href="{% url "statistic:current-month" pk=action.id %}">
-          <span class="octicon octicon-graph"></span>
+        <a class="dropdown-item" href="{% url "statistic:current-month" pk=action.id %}">
+          <span class="octicon octicon-graph"></span> Month Statistic
         </a>
-        <a href="{% url "core:record-create" %}?action={{action.id}}">
-          <span class="octicon octicon-plus"></span>
+        <a class="dropdown-item" href="{% url "core:record-create" %}?action={{action.id}}">
+          <span class="octicon octicon-plus"></span> Create record
         </a>
-        <a href="{% url "goal:create" %}?action={{action.id}}">
-          <span class="octicon octicon-rocket"></span>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="{% url "core:action-update" pk=action.id %}">
+          <span class="octicon octicon-gear"></span> Update
         </a>
-        <a href="{% url "core:action-delete" pk=action.id %}">
-          <span class="octicon octicon-trashcan"></span>
+        <a class="dropdown-item" href="{% url "core:action-delete" pk=action.id %}">
+          <span class="octicon octicon-trashcan"></span> Delete
         </a>
+      </div>
+      </div>
+      <div class="card-title">
+        <h5>{{ action.text }}</h5>
+      </div>
+      <div class="card-meta">
+        {% if action.is_goal_passed == "P" %}
+          Daily Goal passed
+        {% elif action.is_goal_passed == "F" %}
+          Daily Goal not passed yet
+        {% endif %}
+        <div class="d-flex align-items-center">
+          <span class="small">{{ action.record_sum }} {{ action.unit }}</span>
+        </div>
       </div>
     </div>
   </div>
