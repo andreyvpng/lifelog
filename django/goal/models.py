@@ -4,9 +4,9 @@ from utils.models import TimeStampedModel
 
 
 class Goal(TimeStampedModel):
-    action = models.ForeignKey(Action,
-                               on_delete=models.CASCADE,
-                               related_name='goal')
+    action = models.OneToOneField(Action,
+                                  on_delete=models.CASCADE,
+                                  related_name='goal')
     daily_value = models.PositiveIntegerField()
 
     def __str__(self):
