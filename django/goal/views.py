@@ -1,13 +1,13 @@
 from core.models import Action
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponseRedirect
+from django.http.response import HttpResponseBadRequest
 from django.urls import reverse
-from django.views.generic import FormView
+from django.views.generic import UpdateView
 from goal.forms import GoalCreate
 from goal.models import Goal
 
 
-class GoalCreateUpdateView(PermissionDenied, FormView):
+class GoalCreateUpdateView(PermissionDenied, UpdateView):
     form_class = GoalCreate
     template_name = 'goal/goal_form.html'
 
@@ -22,13 +22,21 @@ class GoalCreateUpdateView(PermissionDenied, FormView):
         return kwargs
 
     def form_valid(self, form):
-        action = form.cleaned_data['action']
-        goal = Goal.objects.filter(action=action)
-        if goal:
-            goal.update(**form.cleaned_data)
-        else:
-            Goal.objects.create(**form.cleaned_data)
-        return HttpResponseRedirect(self.get_success_url())
+        self.object = form.save(commit=False)
+
+        if self.object.action.user != self.request.user:
+            return HttpResponseBadRequest()
+
+        self.object.save()
+
+        return super().form_valid(form)
+
+    def get_object(self, queryset=None):
+
+        # get the existing object or created a new one
+        obj, created = Goal.objects.get_or_create(action=self.get_action())
+
+        return obj
 
     def get_action(self):
         params = self.request.GET.dict()
