@@ -13,40 +13,50 @@
   {% for action in object_list %}
   <div class="card">
     <div class="progress">
-      <div class="progress-bar action-{{ action.get_color_display }}" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+      <div id="progress-{{ action.id }}" class="progress-bar action-{{ action.get_color_display }}" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
+    {% if action.goal.daily_value %}
+    <script>
+var percent = {{ action.record_sum }} / {{ action.goal.daily_value }} * 100;
+if (percent > 100) {
+percent = 100;
+}
+percent = percent + "%"
+document.getElementById("progress-{{ action.id }}").style.width = percent;
+    </script>
+    {% endif %}
     <div class="card-body">
       <div class="dropdown card-options">
-      <span class="btn-options" type="button" id="project-dropdown-button-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span class="octicon octicon-three-bars"></span>
-      </span>
-      <div class="dropdown-menu dropdown-menu-right">
-        <a class="dropdown-item" href="{% url "goal:create" %}?action={{action.id}}">
-          <span class="octicon octicon-rocket"></span> Create Goal
-        </a>
-        <a class="dropdown-item" href="{% url "statistic:current-month" pk=action.id %}">
-          <span class="octicon octicon-graph"></span> Month Statistic
-        </a>
-        <a class="dropdown-item" href="{% url "core:record-create" %}?action={{action.id}}">
-          <span class="octicon octicon-plus"></span> Create record
-        </a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="{% url "core:action-update" pk=action.id %}">
-          <span class="octicon octicon-gear"></span> Update
-        </a>
-        <a class="dropdown-item" href="{% url "core:action-delete" pk=action.id %}">
-          <span class="octicon octicon-trashcan"></span> Delete
-        </a>
-      </div>
+        <span class="btn-options" type="button" id="project-dropdown-button-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="octicon octicon-three-bars"></span>
+        </span>
+        <div class="dropdown-menu dropdown-menu-right">
+          <a class="dropdown-item" href="{% url "goal:create" %}?action={{action.id}}">
+            <span class="octicon octicon-rocket"></span> Create Goal
+          </a>
+          <a class="dropdown-item" href="{% url "statistic:current-month" pk=action.id %}">
+            <span class="octicon octicon-graph"></span> Month Statistic
+          </a>
+          <a class="dropdown-item" href="{% url "core:record-create" %}?action={{action.id}}">
+            <span class="octicon octicon-plus"></span> Create record
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url "core:action-update" pk=action.id %}">
+            <span class="octicon octicon-gear"></span> Update
+          </a>
+          <a class="dropdown-item" href="{% url "core:action-delete" pk=action.id %}">
+            <span class="octicon octicon-trashcan"></span> Delete
+          </a>
+        </div>
       </div>
       <div class="card-title">
         <h5>{{ action.text }}</h5>
       </div>
       <div class="card-meta">
         {% if action.is_goal_passed == "P" %}
-          Daily Goal passed
+        Daily Goal passed
         {% elif action.is_goal_passed == "F" %}
-          Daily Goal not passed yet
+        Daily Goal not passed yet
         {% endif %}
         <div class="d-flex align-items-center">
           <span class="small">{{ action.record_sum }} {{ action.unit }}</span>

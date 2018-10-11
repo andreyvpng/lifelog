@@ -33,7 +33,7 @@ class ActionUpdateView(LoginRequiredMixin, UpdateView):
         return super().dispatch(*args, **kwargs)
 
     def get_success_url(self):
-        return reverse('core:dashboard')
+        return reverse('dashboard:dashboard')
 
 
 class RecordListView(LoginRequiredMixin, ListView):
