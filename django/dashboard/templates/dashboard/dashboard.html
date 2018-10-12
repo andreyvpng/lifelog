@@ -49,7 +49,7 @@
         Daily Goal not passed yet
         {% endif %}
         <div class="d-flex align-items-center">
-          <span class="small">{{ action.record_sum }} {{ action.unit }}</span>
+          <span class="small">{{ action.record_sum }} {% if action.goal %}/ {{ action.goal.daily_value }} {% endif %}{{ action.unit }}</span>
         </div>
       </div>
     </div>
