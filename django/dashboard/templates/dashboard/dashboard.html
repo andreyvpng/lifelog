@@ -13,18 +13,8 @@
   {% for action in object_list %}
   <div class="card">
     <div class="progress">
-      <div id="progress-{{ action.id }}" class="progress-bar action-{{ action.get_color_display }}" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+      <div class="progress-bar action-{{ action.get_color_display }}" record_sum="{{ action.record_sum }}" goal_daily_value="{{ action.goal.daily_value }}" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
-    {% if action.goal.daily_value %}
-    <script>
-var percent = {{ action.record_sum }} / {{ action.goal.daily_value }} * 100;
-if (percent > 100) {
-percent = 100;
-}
-percent = percent + "%"
-document.getElementById("progress-{{ action.id }}").style.width = percent;
-    </script>
-    {% endif %}
     <div class="card-body">
       <div class="dropdown card-options">
         <span class="btn-options" type="button" id="project-dropdown-button-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
