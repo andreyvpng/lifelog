@@ -21,9 +21,15 @@
           <span class="octicon octicon-three-bars"></span>
         </span>
         <div class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" href="{% url "goal:create" %}?action={{action.id}}">
+          {% if action.goal %}
+          <a class="dropdown-item" href="{% url "goal:update" pk=action.id %}">
+            <span class="octicon octicon-rocket"></span> Update Goal
+          </a>
+          {% else %}
+          <a class="dropdown-item" href="{% url "goal:create" pk=action.id %}">
             <span class="octicon octicon-rocket"></span> Create Goal
           </a>
+          {% endif %}
           <a class="dropdown-item" href="{% url "statistic:current-month" pk=action.id %}">
             <span class="octicon octicon-graph"></span> Month Statistic
           </a>
