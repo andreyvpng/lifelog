@@ -7,7 +7,9 @@
 
 Life log app gives you the opportunity to track your activity.
 
-![Screenshot](screenshot.png)
+## Demo
+
+https://lifelogdjango.herokuapp.com
 
 ## Build & Run
 
