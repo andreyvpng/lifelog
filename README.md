@@ -1,4 +1,4 @@
-# Life Log
+<p align="left"><img src="logo/horizontal.png" alt="lifelog" height="100px"></p>
 
 [![GitHub issues](https://img.shields.io/github/issues/andreyvpng/lifelog.svg)](https://github.com/andreyvpng/lifelog/issues)
 [![GitHub forks](https://img.shields.io/github/forks/andreyvpng/lifelog.svg)](https://github.com/andreyvpng/lifelog/network)
