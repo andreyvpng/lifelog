@@ -1,9 +1,9 @@
-<p align="left"><img src="logo/horizontal.png" alt="lifelog" height="100px"></p>
+<p align="left"><img src="logo/horizontal.svg" alt="lifelog" height="100px"></p>
 
-[![GitHub issues](https://img.shields.io/github/issues/andreyvpng/lifelog.svg)](https://github.com/andreyvpng/lifelog/issues)
-[![GitHub forks](https://img.shields.io/github/forks/andreyvpng/lifelog.svg)](https://github.com/andreyvpng/lifelog/network)
-[![GitHub stars](https://img.shields.io/github/stars/andreyvpng/lifelog.svg)](https://github.com/andreyvpng/lifelog/stargazers)
-[![GitHub license](https://img.shields.io/github/license/andreyvpng/lifelog.svg)](https://github.com/andreyvpng/lifelog/blob/master/LICENSE)
+[![GitHub issues](https://img.shields.io/github/issues/andreyvpng/lifelog.svg?style=for-the-badge)](https://github.com/andreyvpng/lifelog/issues)
+[![GitHub forks](https://img.shields.io/github/forks/andreyvpng/lifelog.svg?style=for-the-badge)](https://github.com/andreyvpng/lifelog/network)
+[![GitHub stars](https://img.shields.io/github/stars/andreyvpng/lifelog.svg?style=for-the-badge)](https://github.com/andreyvpng/lifelog/stargazers)
+[![GitHub license](https://img.shields.io/github/license/andreyvpng/lifelog.svg?style=for-the-badge)](https://github.com/andreyvpng/lifelog/blob/master/LICENSE)
 
 Life log app gives you the opportunity to track your activity.
 
@@ -25,6 +25,10 @@ Add .env. For developping I'm using this:
 For build and run, use:
 
     docker-compose build && docker-compose up
+
+## Logo
+
+Thank you, @reallinfo, for the logo and favicon.
 
 ## License
 
