@@ -8,44 +8,49 @@
     <link rel="stylesheet" href="https://bootswatch.com/4/simplex/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/4.3.0/font/octicons.min.css" media="all">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chartist/0.11.0/chartist.min.css" media="all">
+    <link rel="shortcut icon" href="{% static "img/favicon.ico" %}" />
     <link rel="stylesheet" href="{% static "css/base.css" %}" media="all">
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="{% if request.user.is_authenticated %}{% url "dashboard:dashboard" %}{% else %}{% url "core:welcome" %}{% endif %}">Life Log</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="octicon octicon-three-bars"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarColor01">
-        <ul class="navbar-nav ml-auto">
-          {% if request.user.is_authenticated %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url "dashboard:dashboard" %}"><span class="octicon octicon-dashboard"></span> Dashboard</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="octicon octicon-plus"></span> Create
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="{% url "core:action-create" %}">Action</a>
-              <a class="dropdown-item" href="{% url "core:record-create" %}">Record</a>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url "user:logout" %}"><span class="octicon octicon-sign-out"></span> Logout</a>
-          </li>
-          {% else %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url "user:login" %}"><span class="octicon octicon-sign-in"></span> Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url "user:register" %}"><span class="octicon octicon-sign-out"></span> Register</a>
-          </li>
-          {% endif %}
-          <li class="nav-item">
-            <a class="nav-link" href="https://github.com/andreyvpng/lifelog"><span class="octicon octicon-repo"></span> Repository</a>
-          </li>
-        </ul>
+      <div class="container">
+        <a class="navbar-brand" href="{% if request.user.is_authenticated %}{% url "dashboard:dashboard" %}{% else %}{% url "core:welcome" %}{% endif %}">
+          <img src="{% static "img/logo.svg" %}" alt="logo" height="36px">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="octicon octicon-three-bars"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor01">
+          <ul class="navbar-nav ml-auto">
+            {% if request.user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url "dashboard:dashboard" %}"><span class="octicon octicon-dashboard"></span> Dashboard</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="octicon octicon-plus"></span> Create
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{% url "core:action-create" %}">Action</a>
+                <a class="dropdown-item" href="{% url "core:record-create" %}">Record</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url "user:logout" %}"><span class="octicon octicon-sign-out"></span> Logout</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url "user:login" %}"><span class="octicon octicon-sign-in"></span> Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url "user:register" %}"><span class="octicon octicon-sign-out"></span> Register</a>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+              <a class="nav-link" href="https://github.com/andreyvpng/lifelog"><span class="octicon octicon-repo"></span> Repository</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </nav>
     <div class="container mt-4">
