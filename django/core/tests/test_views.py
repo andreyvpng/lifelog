@@ -1,6 +1,7 @@
-from core.models import Action
+from core.models import Action, Record
+from django.db.models import Sum
 from django.test import TestCase
-from utils.factory import ActionFactory, UserFactory
+from utils.factory import ActionFactory, RecordFactory, UserFactory
 
 
 class WelcomeViewTest(TestCase):
@@ -172,3 +173,94 @@ class ActionUpdateViewTest(TestCase):
         self.assertEqual(object.unit, self.object['unit'])
 
         self.assertEqual(resp.status_code, 403)
+
+
+class RecordCreateViewTest(TestCase):
+
+    def setUp(self):
+        self.user = UserFactory(username='test', password='12345')
+        self.other_user = UserFactory(username='test1', password='12345')
+
+        self.object = {'text': 'Book Reading',
+                       'color': 1,
+                       'unit': 'pages',
+                       'user': self.user}
+
+        self.action = ActionFactory(**self.object)
+        self.url = '/record-create'
+
+        self.new_record = {'action': self.action.id,
+                           'value': 100}
+
+    def get_value_sum_of_action(self):
+        sum = Record.objects.filter(action=self.action).aggregate(Sum('value'))
+        return sum['value__sum']
+
+    def test_create_record_by_user(self):
+        resp = self.client.login(username='test', password='12345')
+        resp = self.client.post(self.url, self.new_record)
+
+        self.assertEqual(self.get_value_sum_of_action(), 100)
+        self.assertEqual(resp.status_code, 302)
+
+    def test_create_record_by_other_user(self):
+        resp = self.client.login(username='test1', password='12345')
+        resp = self.client.post(self.url, self.new_record)
+
+        self.assertEqual(self.get_value_sum_of_action(), None)
+        self.assertEqual(resp.status_code, 200)
+
+
+class RecordListViewTest(TestCase):
+    RECORD_LIST_HTML = """
+        <tr>
+          <th scope="row">{text}</th>
+          <td>{value} {unit}</td>
+        </tr>
+    """
+
+    def setUp(self):
+        self.user = UserFactory(username='test', password='12345')
+        self.other_user = UserFactory(username='test1', password='12345')
+
+        self.action = ActionFactory(user=self.user)
+        self.action1 = ActionFactory(user=self.other_user)
+        actions = [self.action, self.action1]
+
+        for action in actions:
+            for _ in range(1, 10):
+                RecordFactory(action=action)
+
+        self.url = '/records'
+
+    def test_list_of_actions_for_user(self):
+        resp = self.client.login(username='test', password='12345')
+        resp = self.client.get(self.url)
+        records_in_template = list(resp.context_data['object_list'])
+        records_of_user = list(Record.objects.filter(action__user=self.user))
+        self.assertEqual(records_in_template, records_of_user)
+
+    def test_list_of_actions_for_other_user(self):
+        resp = self.client.login(username='test1', password='12345')
+        resp = self.client.get(self.url)
+        records_in_template = list(resp.context_data['object_list'])
+        records_of_user = list(Record.objects.filter(action__user=self.other_user))
+        self.assertEqual(records_in_template, records_of_user)
+
+    def test_list_of_actions_template(self):
+        resp = self.client.login(username='test', password='12345')
+        resp = self.client.get(self.url)
+        rendered_content = resp.rendered_content
+
+        full_list_of_records = ''
+        records = resp.context_data['object_list']
+
+        for record in records:
+            full_list_of_records += self.RECORD_LIST_HTML.format(
+                text=record.action.text,
+                unit=record.action.unit,
+                value=record.value
+            )
+
+        self.assertInHTML(full_list_of_records, rendered_content)
+        self.assertTemplateUsed(resp, 'core/record_list.html')
