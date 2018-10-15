@@ -3,7 +3,6 @@ from core.models import Action, Record
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
-from django.http.response import HttpResponseBadRequest
 from django.urls import reverse, reverse_lazy
 from django.views.generic import (CreateView, DeleteView, ListView,
                                   TemplateView, UpdateView)
@@ -54,16 +53,6 @@ class RecordCreateView(LoginRequiredMixin, CreateView):
         initial = super(RecordCreateView, self).get_initial()
         initial['action'] = self.get_action()
         return initial
-
-    def form_valid(self, form):
-        self.object = form.save(commit=False)
-
-        if self.object.action.user != self.request.user:
-            return HttpResponseBadRequest()
-
-        self.object.save()
-
-        return super().form_valid(form)
 
     def get_form_kwargs(self):
         kwargs = super(RecordCreateView, self).get_form_kwargs()
