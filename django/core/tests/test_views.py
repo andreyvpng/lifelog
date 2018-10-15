@@ -1,6 +1,6 @@
 from core.models import Action
 from django.test import TestCase
-from utils.factory import UserFactory, ActionFactory
+from utils.factory import ActionFactory, UserFactory
 
 
 class WelcomeViewTest(TestCase):
@@ -22,6 +22,57 @@ class WelcomeViewTest(TestCase):
         resp = self.client.get('/')
         self.assertEqual(resp.status_code, 302)
         self.assertRedirects(resp, '/dashboard/')
+
+
+class ActionListViewTest(TestCase):
+    ACTION_LIST_HTML = """
+        <tr>
+          <th scope="row">{text}</th>
+          <td>{unit}</td>
+        </tr>
+    """
+
+    def setUp(self):
+        self.user = UserFactory(username='test', password='12345')
+        self.other_user = UserFactory(username='test1', password='12345')
+        users = [self.user, self.other_user]
+
+        for user in users:
+            for _ in range(1, 10):
+                ActionFactory(user=user)
+
+        self.url = '/actions'
+
+    def test_list_of_actions_for_user(self):
+        resp = self.client.login(username='test', password='12345')
+        resp = self.client.get(self.url)
+        actions_in_template = list(resp.context_data['object_list'])
+        actions_of_user = list(Action.objects.filter(user=self.user))
+        self.assertEqual(actions_in_template, actions_of_user)
+
+    def test_list_of_actions_for_other_user(self):
+        resp = self.client.login(username='test1', password='12345')
+        resp = self.client.get(self.url)
+        actions_in_template = list(resp.context_data['object_list'])
+        actions_of_other_user = list(Action.objects.filter(user=self.other_user))
+        self.assertEqual(actions_in_template, actions_of_other_user)
+
+    def test_list_of_actions_template(self):
+        resp = self.client.login(username='test', password='12345')
+        resp = self.client.get(self.url)
+        rendered_content = resp.rendered_content
+
+        full_list_of_actions = ''
+        actions = resp.context_data['object_list']
+
+        for action in actions:
+            full_list_of_actions += self.ACTION_LIST_HTML.format(
+                text=action.text,
+                unit=action.unit
+            )
+
+        self.assertInHTML(full_list_of_actions, rendered_content)
+        self.assertTemplateUsed(resp, 'core/action_list.html')
 
 
 class ActionCreateViewTest(TestCase):
