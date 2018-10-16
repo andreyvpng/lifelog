@@ -1,5 +1,6 @@
 <p align="left"><img src="logo/horizontal.svg" alt="lifelog" height="100px"></p>
 
+[![Travis (.org)](https://img.shields.io/travis/andreyvpng/lifelog.svg?style=for-the-badge)](https://travis-ci.com/andreyvpng/lifelog)
 [![GitHub issues](https://img.shields.io/github/issues/andreyvpng/lifelog.svg?style=for-the-badge)](https://github.com/andreyvpng/lifelog/issues)
 [![GitHub forks](https://img.shields.io/github/forks/andreyvpng/lifelog.svg?style=for-the-badge)](https://github.com/andreyvpng/lifelog/network)
 [![GitHub stars](https://img.shields.io/github/stars/andreyvpng/lifelog.svg?style=for-the-badge)](https://github.com/andreyvpng/lifelog/stargazers)
