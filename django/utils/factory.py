@@ -1,5 +1,6 @@
 import factory
 from core.models import Action, Record
+from goal.models import Goal
 from django.conf import settings
 
 
@@ -39,3 +40,11 @@ class RecordFactory(CreateFactoryMixin, factory.DjangoModelFactory):
 
     class Meta:
         model = Record
+
+
+class GoalFactory(CreateFactoryMixin, factory.DjangoModelFactory):
+    action = factory.SubFactory(ActionFactory)
+    daily_value = 2000
+
+    class Meta:
+        model = Goal
