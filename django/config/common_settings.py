@@ -36,8 +36,17 @@ INSTALLED_APPS = [
     'statistic',
     'goal',
     'user',
+    'api',
 
     'crispy_forms',
+
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -46,6 +55,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

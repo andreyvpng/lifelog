@@ -15,6 +15,7 @@ Including another URLconf
 """
 import user.urls
 
+import api.urls
 import core.urls
 import dashboard.urls
 import goal.urls
@@ -29,4 +30,5 @@ urlpatterns = [
     path('statistic/', include(statistic.urls, namespace='statistic')),
     path('goal/', include(goal.urls, namespace='goal')),
     path('', include(core.urls, namespace='core')),
+    path('api/v1/', include(api.urls, namespace='api')),
 ]

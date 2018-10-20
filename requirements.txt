@@ -3,5 +3,8 @@ django-crispy-forms==1.7.2
 gunicorn==19.9.0
 psycopg2==2.7.5
 psycopg2-binary==2.7.5
+djangorestframework==3.9.0
+django-rest-auth==0.9.3
+django-allauth==0.38.0
 
 -r requirements.heroku.txt
