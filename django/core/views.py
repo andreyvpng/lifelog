@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from core.forms import RecordCreate
 from core.models import Action, Record
 from core.serializers import ActionSerializer
@@ -5,6 +7,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
+from django.utils import timezone
+from django.utils.timezone import get_current_timezone
 from django.views.generic import (CreateView, DeleteView, ListView,
                                   TemplateView, UpdateView)
 from rest_framework import permissions, viewsets
@@ -113,7 +117,7 @@ class ActionDeleteView(LoginRequiredMixin, DeleteView):
 
 
 class ActionViewSet(viewsets.ModelViewSet):
-    queryset = Action.objects.all()
+    queryset = Action.dashboard
     serializer_class = ActionSerializer
     permission_classes = (
         permissions.IsAuthenticated,
@@ -124,6 +128,27 @@ class ActionViewSet(viewsets.ModelViewSet):
         serializer.save(user=self.request.user)
 
     def get_queryset(self):
-        queryset = self.queryset
-        query_set = queryset.filter(user=self.request.user)
-        return query_set
+        dt = self.get_date()
+
+        if dt is None:
+            dt = timezone.now()
+
+        qs = self.queryset.get(
+            user=self.request.user,
+            day=dt.day,
+            month=dt.month,
+            year=dt.year
+        )
+        return qs
+
+    def get_date(self):
+        params = self.request.GET.dict()
+        tz = get_current_timezone()
+
+        try:
+            dt = tz.localize(
+                datetime.strptime(params.get('date'), '%Y-%m-%d'))
+        except (TypeError, ValueError):
+            dt = None
+
+        return dt
