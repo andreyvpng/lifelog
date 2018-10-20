@@ -1,11 +1,13 @@
 from core.forms import RecordCreate
 from core.models import Action, Record
+from core.serializers import ActionSerializer
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import (CreateView, DeleteView, ListView,
                                   TemplateView, UpdateView)
+from rest_framework import permissions, viewsets
 
 
 class WelcomeView(TemplateView):
@@ -108,3 +110,20 @@ class ActionDeleteView(LoginRequiredMixin, DeleteView):
             raise PermissionDenied
 
         return super().dispatch(*args, **kwargs)
+
+
+class ActionViewSet(viewsets.ModelViewSet):
+    queryset = Action.objects.all()
+    serializer_class = ActionSerializer
+    permission_classes = (
+        permissions.IsAuthenticated,
+        permissions.BasePermission
+    )
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+    def get_queryset(self):
+        queryset = self.queryset
+        query_set = queryset.filter(user=self.request.user)
+        return query_set
