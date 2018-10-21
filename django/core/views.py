@@ -2,7 +2,7 @@ from datetime import datetime
 
 from core.forms import RecordCreate
 from core.models import Action, Record
-from core.serializers import ActionSerializer
+from core.serializers import ActionSerializer, RecordSerializer
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
@@ -152,3 +152,18 @@ class ActionViewSet(viewsets.ModelViewSet):
             dt = None
 
         return dt
+
+
+class RecordCreateAPIView(viewsets.ModelViewSet):
+    queryset = Record.objects
+    serializer_class = RecordSerializer
+    permission_classes = (
+        permissions.IsAuthenticated,
+        permissions.BasePermission
+    )
+
+    def get_queryset(self):
+        qs = self.queryset.filter(
+            action__user=self.request.user,
+        )
+        return qs

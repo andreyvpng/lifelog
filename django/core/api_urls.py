@@ -5,6 +5,7 @@ from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register('actions', views.ActionViewSet)
+router.register('records', views.RecordCreateAPIView)
 
 urlpatterns = [
     path('', include(router.urls))

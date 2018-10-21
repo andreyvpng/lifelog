@@ -1,6 +1,6 @@
-from core.models import Action
-from rest_framework import serializers
+from core.models import Action, Record
 from goal.serializers import GoalSerializer
+from rest_framework import serializers
 
 
 class ActionSerializer(serializers.HyperlinkedModelSerializer):
@@ -18,3 +18,11 @@ class ActionSerializer(serializers.HyperlinkedModelSerializer):
         model = Action
         fields = ('id', 'text', 'unit', 'user', 'record_sum',
                   'goal')
+
+
+class RecordSerializer(serializers.HyperlinkedModelSerializer):
+    action = serializers.PrimaryKeyRelatedField(queryset=Action.objects.all())
+
+    class Meta:
+        model = Record
+        fields = ('value', 'action')
