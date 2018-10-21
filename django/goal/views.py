@@ -1,12 +1,12 @@
 from core.models import Action
-from django.core.exceptions import PermissionDenied
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.http.response import HttpResponseBadRequest, HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.views.generic import CreateView, UpdateView
 from goal.forms import GoalForm
 from goal.models import Goal
-from django.shortcuts import get_object_or_404
 
 
 class GoalCreateView(LoginRequiredMixin, CreateView):
