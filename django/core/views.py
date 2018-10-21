@@ -2,6 +2,7 @@ from datetime import datetime
 
 from core.forms import RecordCreate
 from core.models import Action, Record
+from core.permissions import IsOwnerOfAction
 from core.serializers import ActionSerializer, RecordSerializer
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
@@ -159,7 +160,7 @@ class RecordCreateAPIView(viewsets.ModelViewSet):
     serializer_class = RecordSerializer
     permission_classes = (
         permissions.IsAuthenticated,
-        permissions.BasePermission
+        IsOwnerOfAction,
     )
 
     def get_queryset(self):
