@@ -55,9 +55,18 @@ class Record(TimeStampedModel):
     action = models.ForeignKey(Action,
                                on_delete=models.CASCADE,
                                null=False,
+                               verbose_name="Action",
+                               help_text="Choose your action",
                                related_name='records')
-    value = models.PositiveIntegerField(null=False)
+    value = models.PositiveIntegerField(null=False,
+                                        verbose_name="Value",
+                                        help_text="Enter a value of record")
 
     def __str__(self):
         return '{} {}'.format(self.value,
                               self.action.unit[:75])
+
+    class Meta:
+        verbose_name = 'record'
+        verbose_name_plural = 'records'
+        ordering = ('-created', )
