@@ -10,9 +10,11 @@ User = get_user_model()
 class Action(TimeStampedModel):
     text = models.CharField(max_length=140,
                             null=False,
+                            verbose_name="Text",
                             help_text="Enter an action title (e.g. Book Reading)")
     unit = models.CharField(max_length=50,
                             null=False,
+                            verbose_name="Unit",
                             help_text="Enter a unit (e.g. pages)")
 
     user = models.ForeignKey(User,
@@ -31,6 +33,7 @@ class Action(TimeStampedModel):
     color = models.IntegerField(
         choices=COLORS,
         default=1,
+        verbose_name="Color",
         help_text="Choose a color of progress bar"
     )
 
@@ -41,6 +44,11 @@ class Action(TimeStampedModel):
     def __str__(self):
         return '{} ({})'.format(self.text[:75],
                                 self.unit)
+
+    class Meta:
+        verbose_name = 'action'
+        verbose_name_plural = 'actions'
+        ordering = ('-created', )
 
 
 class Record(TimeStampedModel):
