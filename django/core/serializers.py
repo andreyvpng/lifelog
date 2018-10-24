@@ -4,7 +4,6 @@ from rest_framework import serializers
 
 
 class ActionSerializer(serializers.HyperlinkedModelSerializer):
-    user = serializers.ReadOnlyField(source='user.username')
     record_sum = serializers.SerializerMethodField()
     goal = GoalSerializer(read_only=True)
 
@@ -16,13 +15,19 @@ class ActionSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Action
-        fields = ('id', 'text', 'unit', 'user', 'record_sum',
+        fields = ('id',
+                  'text',
+                  'unit',
+                  'created',
+                  'record_sum',
                   'goal')
 
 
 class RecordSerializer(serializers.HyperlinkedModelSerializer):
-    action = serializers.PrimaryKeyRelatedField(queryset=Action.objects.all())
+    action = serializers.PrimaryKeyRelatedField(
+        queryset=Action.objects.all())
 
     class Meta:
         model = Record
-        fields = ('value', 'action')
+        fields = ('value',
+                  'action')

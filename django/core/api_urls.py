@@ -1,12 +1,8 @@
-from core import views
-from django.conf.urls import include
-from django.urls import path
+import core.views
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-router.register('actions', views.ActionViewSet)
-router.register('records', views.RecordCreateAPIView)
+router.register('actions', core.views.ActionViewSet)
+router.register('records', core.views.RecordCreateAPIView)
 
-urlpatterns = [
-    path('', include(router.urls))
-]
+urlpatterns = router.urls
