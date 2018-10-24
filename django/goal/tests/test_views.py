@@ -1,7 +1,6 @@
-from core.models import Action, Record
-from goal.models import Goal
 from django.test import TestCase
-from utils.factory import ActionFactory, RecordFactory, UserFactory, GoalFactory
+from goal.models import Goal
+from utils.factory import ActionFactory, GoalFactory, UserFactory
 
 
 class GoalCreateViewTest(TestCase):
