@@ -1,0 +1,9 @@
+[flake8]
+ignore = 
+    # Module level import not at top of file (E402)
+    E402,
+    # Line too long (82 > 79 characters) (E501)
+    E501
+exclude =
+    django/config
+show-source
