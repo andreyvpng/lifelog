@@ -3,7 +3,7 @@ from user.models import User
 from django.test import TestCase
 
 
-class RegisterView(TestCase):
+class RegisterViewTest(TestCase):
 
     def test_success_url(self):
         resp = self.client.post(
