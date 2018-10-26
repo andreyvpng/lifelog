@@ -4,6 +4,27 @@
 {% block title %} Create Action - {{ block.super }}{% endblock %}
 
 {% block body %}
+<div class="card card-output">
+  <div class="progress">
+    <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+  <div class="card-body">
+    <div class="dropdown card-options">
+      <span class="btn-options" type="button" id="project-dropdown-button-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="octicon octicon-three-bars"></span>
+      </span>
+    </div>
+    <div class="card-title">
+      <h5 id="card-title"></h5>
+    </div>
+    <div class="card-meta">
+      <div class="d-flex align-items-center">
+        <span class="small" id="card-unit"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
 <form method="post">
   {% csrf_token %}
   {{ form|crispy }}
