@@ -31,20 +31,28 @@ if (card_output.length) {
     return color;
   }
 
-  $("#card-title").text($("form #div_id_text input").val())
-  $("#card-unit").text($("form #div_id_unit input").val())
-  $("#progress-bar")[0].classList = ['progress-bar', get_color($("form #div_id_color select"))].join(' ')
+  var form_title = $("form #div_id_text input"),
+      form_unit = $("form #div_id_unit input"),
+      form_color = $("form #div_id_color select");
+
+  var card_title = $("#card-title"),
+      card_unit = $("#card-unit"),
+      card_color = $("#progress-bar");
+
+  card_title.text(form_title.val())
+  card_unit.text(form_unit.val())
+  card_color[0].classList = ['progress-bar', get_color(form_color)].join(' ')
 
 
-  $("form #div_id_text input").on("input", function(e) {
-    $("#card-title").text( $(e.target).val() )
+  form_title.on("input", function(e) {
+    card_title.text( $(e.target).val() )
   });
 
-  $("form #div_id_unit input").on("input", function(e) {
-    $("#card-unit").text( $(e.target).val() )
+  form_unit.on("input", function(e) {
+    card_unit.text( $(e.target).val() )
   });
 
-  $("form #div_id_color select").on("input", function(e) {
-    $("#progress-bar")[0].classList = ['progress-bar', get_color($(e.target))].join(' ')
+  form_color.on("input", function(e) {
+    card_color[0].classList = ['progress-bar', get_color($(e.target))].join(' ')
   });
 }
